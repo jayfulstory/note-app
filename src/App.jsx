@@ -19,9 +19,25 @@ function App() {
     setNotes([...notes, newNote]);
   };
 
+  const onUpdateNote = updatedNote => {
+    const updatedNotesArray = notes.map(note => {
+      if (note.id === updatedNote.id) {
+        return updatedNote;
+      } else {
+        return note;
+      }
+    });
+
+    setNotes(updatedNotesArray);
+  };
+
   const onDeleteNote = id => {
     const filterNotes = notes.filter(note => note.id !== id);
     setNotes(filterNotes);
+  };
+
+  const getActiveNote = () => {
+    return notes.find(note => note.id === activeNote);
   };
   return (
     <div className='App'>
@@ -32,7 +48,7 @@ function App() {
         activeNote={activeNote}
         setActiveNote={setActiveNote}
       />
-      <Main />
+      <Main activeNote={getActiveNote()} onUpdateNote={onUpdateNote} />
     </div>
   );
 }
